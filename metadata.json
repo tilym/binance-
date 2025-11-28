@@ -1,0 +1,5 @@
+{
+  "name": "BinanceMonitor Pro",
+  "description": "A professional-grade, bilingual Binance market monitoring dashboard featuring real-time K-line charts, spot/futures switching, and an intelligent volatility alert system.",
+  "requestFramePermissions": []
+}
