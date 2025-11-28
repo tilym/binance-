@@ -7,9 +7,10 @@ interface AlertPanelProps {
   t: Translation;
   onClear: () => void;
   onTest?: () => void;
+  onSelectSymbol: (symbol: string) => void;
 }
 
-const AlertPanel: React.FC<AlertPanelProps> = ({ alerts, t, onClear, onTest }) => {
+const AlertPanel: React.FC<AlertPanelProps> = ({ alerts, t, onClear, onTest, onSelectSymbol }) => {
   return (
     <div className="flex flex-col bg-slate-900 border-b border-slate-700 h-44 shrink-0 transition-all">
       {/* Header */}
@@ -56,15 +57,17 @@ const AlertPanel: React.FC<AlertPanelProps> = ({ alerts, t, onClear, onTest }) =
             {alerts.map((alert) => (
                <div 
                 key={alert.id} 
-                className="flex items-center gap-2 p-2 bg-slate-800/30 border border-slate-800 rounded hover:bg-slate-800 transition-colors animate-fadeIn"
+                onClick={() => onSelectSymbol(alert.symbol)}
+                className="flex items-center gap-2 p-2 bg-slate-800/30 border border-slate-800 rounded hover:bg-slate-800 hover:border-slate-600 transition-all animate-fadeIn cursor-pointer group"
+                title="Click to view chart"
                >
                   {/* Time */}
-                  <div className="text-[10px] font-mono text-slate-500 shrink-0">
+                  <div className="text-[10px] font-mono text-slate-500 shrink-0 group-hover:text-slate-400">
                     {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                   </div>
                   
                   {/* Symbol */}
-                  <div className="text-xs font-bold text-slate-200 shrink-0 w-16">
+                  <div className="text-xs font-bold text-slate-200 shrink-0 w-16 group-hover:text-white">
                      {alert.symbol.replace('USDT', '')}
                   </div>
 
@@ -80,7 +83,7 @@ const AlertPanel: React.FC<AlertPanelProps> = ({ alerts, t, onClear, onTest }) =
                   </div>
 
                   {/* Message */}
-                  <div className="text-[10px] text-slate-400 truncate flex-1" title={alert.message}>
+                  <div className="text-[10px] text-slate-400 truncate flex-1 group-hover:text-slate-300" title={alert.message}>
                      {alert.message.split('(')[1]?.replace(')', '') || alert.message}
                   </div>
                   
@@ -88,7 +91,7 @@ const AlertPanel: React.FC<AlertPanelProps> = ({ alerts, t, onClear, onTest }) =
                   <div className={`w-1 h-full absolute right-0 top-0 bottom-0 rounded-r ${
                        alert.type === 'VOLUME_SPIKE' ? 'bg-yellow-500' : 
                        alert.type === 'PRICE_SURGE' ? 'bg-green-500' : 'bg-red-500'
-                  } opacity-20`} />
+                  } opacity-20 group-hover:opacity-40 transition-opacity`} />
                </div>
             ))}
           </div>

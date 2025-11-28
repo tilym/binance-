@@ -448,6 +448,7 @@ function App() {
                 t={t} 
                 onClear={() => setAlerts([])} 
                 onTest={handleTestAlert}
+                onSelectSymbol={setActiveSymbol}
             />
 
             {/* Chart Controls */}
